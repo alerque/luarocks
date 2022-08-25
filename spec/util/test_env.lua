@@ -332,8 +332,8 @@ function test_env.set_args()
          elseif system == "Darwin" then
             test_env.TEST_TARGET_OS = "osx"
             if test_env.CI then
-               test_env.OPENSSL_INCDIR = "/usr/local/opt/openssl/include"
-               test_env.OPENSSL_LIBDIR = "/usr/local/opt/openssl/lib"
+               test_env.OPENSSL_INCDIR = "$(brew --prefix openssl)/include"
+               test_env.OPENSSL_LIBDIR = "$(brew --prefix openssl)/lib"
             end
          end
       end
@@ -1023,10 +1023,11 @@ function test_env.main()
       table.insert(urls, "/luafilesystem-${LUAFILESYSTEM}.src.rock")
       table.insert(urls, "/luasocket-${LUASOCKET}.src.rock")
       table.insert(urls, "/luasocket-${LUASOCKET}.rockspec")
+      table.insert(urls, "/luasec-${LUASEC}.src.rock")
       table.insert(urls, "/md5-1.2-1.src.rock")
       table.insert(urls, "/manifests/hisham/lua-zlib-1.2-0.src.rock")
       table.insert(urls, "/manifests/hisham/lua-bz2-0.2.1.1-1.src.rock")
-      rocks = {"luafilesystem", "luasocket", "md5", "lua-zlib", "lua-bz2"}
+      rocks = {"luafilesystem", "luasocket", "luasec", "md5", "lua-zlib", "lua-bz2"}
       if test_env.TEST_TARGET_OS ~= "windows" then
          if test_env.lua_version == "5.1" then
             table.insert(urls, "/bit32-${BIT32}.src.rock")
