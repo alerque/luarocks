@@ -197,7 +197,6 @@ function builtin.run(rockspec, no_install)
          local ok = execute(variables.LD.." "..variables.LDFLAGS.." "..variables.LIBFLAG, "-o", library, unpack(extras))
          return ok
       end
-      --[[ TODO disable static libs until we fix the conflict in the manifest, which will take extending the manifest format.
       compile_static_library = function(library, objects, libraries, libdirs, name)
          local ok = execute(variables.AR, "rc", library, unpack(objects))
          if ok then
@@ -205,7 +204,6 @@ function builtin.run(rockspec, no_install)
          end
          return ok
       end
-      ]]
    elseif cfg.is_platform("win32") then
       compile_object = function(object, source, defines, incdirs)
          local extras = {}
@@ -238,12 +236,10 @@ function builtin.run(rockspec, no_install)
          end
          return ok
       end
-      --[[ TODO disable static libs until we fix the conflict in the manifest, which will take extending the manifest format.
       compile_static_library = function(library, objects, libraries, libdirs, name)
          local ok = execute(variables.AR, "-out:"..library, unpack(objects))
          return ok
       end
-      ]]
    else
       compile_object = function(object, source, defines, incdirs)
          local extras = {}
@@ -343,7 +339,6 @@ function builtin.run(rockspec, no_install)
          if not ok then
             return nil, "Failed compiling module "..module_name
          end
-         --[[ TODO disable static libs until we fix the conflict in the manifest, which will take extending the manifest format.
          module_name = name:match("([^.]*)$").."."..util.matchquote(cfg.static_lib_extension)
          if moddir ~= "" then
             module_name = dir.path(moddir, module_name)
@@ -353,7 +348,6 @@ function builtin.run(rockspec, no_install)
          if not ok then
             return nil, "Failed compiling static library "..module_name
          end
-         ]]
       end
    end
    if not no_install then
